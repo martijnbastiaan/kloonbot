@@ -9,15 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.pull_request }}
 
+    // github.repository == ‘jimbob88/Osiris’
+
     env:
       KBOT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
       KBOT_COMMENT: ${{ github.event.comment.body }}
+      KBOT_REPO: ${{ github.event.pull_request.head.repo.full_name }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - run: |
+          jq --help || true
+          sudo apt update && sudo apt install jq
           ./script.sh
 
-          echo "Comment on PR #${{ toJSON(github) }}"
+          echo "Comment on PR ${{ toJSON(github) }}"
+      # KBOT_IS_FORK:
+
+          pull_request_json="$(curl \
+            -H "Accept: application/vnd.github.v3+json" \
+            ${{ github.event.issue.pull_request.url }})"
+
+          echo "$pull_request_json" | jq ".head.repo.fork"
