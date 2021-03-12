@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-set -x
 IFS=$'\n\t'
 
 HEADERS="Accept: application/vnd.github.v3+json"
@@ -9,7 +8,7 @@ kloon_fork_branch_to_local_branch() {
   local pull_request_json="$1"
   local commit="$2"
   local clone_url=$(echo "${pull_request_json}" | jq -r ".head.repo.clone_url")
-  local branch_name=$(echo "${pull_request_json}" | jq -r ".head.ref")
+  local branch_name=$(echo "${pull_request_json}" | jq -r ".head.label")
 
   git remote add fork "${clone_url}"
   git fetch fork
