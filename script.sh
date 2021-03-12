@@ -2,12 +2,14 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-association=#${{ github.event.comment.author_association }}
+association=$1
+body=$2
 
 if [[ $association =~ ^(OWNER|MEMBER|COLLABORATOR)$ ]]; then
-  body=#${{ github.event.comment.body }}
   echo $body
   if [[ $body == "@kloonbot run ci"* ]]; then
     echo "woot"
   fi
 fi
+
+echo "${{ github.event.comment.author_association }}"
