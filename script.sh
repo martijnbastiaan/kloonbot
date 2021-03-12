@@ -15,6 +15,7 @@ kloon_fork_branch_to_local_branch() {
 
   git remote add fork "${clone_url}"
   git fetch fork
+  git branch -D "${new_branch_name}" || true
   git checkout -b "${new_branch_name}"
   git reset "$commit" --hard
   git push --set-upstream origin "${new_branch_name}" -f
