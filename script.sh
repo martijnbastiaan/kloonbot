@@ -28,7 +28,7 @@ parse_comment(){
   echo "${commit}" 1>&2
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
-    echo "${commit}" 1>&2
+    echo "${commit}"
   else
     echo "${KBOT_COMMENT}" 1>&2
     exit 1;
@@ -37,7 +37,6 @@ parse_comment(){
 
 if [[ $KBOT_AUTHOR_ASSOC =~ ^(OWNER|MEMBER|COLLABORATOR)$ ]]; then
   commit=$(parse_comment)
-  echo "commit: ${commit}"
 
   pull_request_json=$(curl -H "${HEADERS}" "${KBOT_PULL_REQUEST_URL}")
   is_fork=$(echo "$pull_request_json" | jq -r ".head.repo.fork")
