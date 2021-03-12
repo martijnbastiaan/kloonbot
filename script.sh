@@ -26,7 +26,7 @@ parse_comment(){
   local commit=$(echo "${line}" | awk '{print $3}')
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
-    echo "${commit##*( )}" # strips whitespace
+    echo $(echo "$commit" | tr -d '\n\r ')
   else
     echo "parse_comment: Could not parse comment" 1>&2
     exit 1;
