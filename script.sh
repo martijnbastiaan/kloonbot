@@ -20,9 +20,10 @@ kloon_fork_branch_to_local_branch() {
 }
 
 parse_comment(){
-  local at=$(echo "${KBOT_COMMENT}" | awk '{print $1}')
-  local cmd=$(echo "${KBOT_COMMENT}" | awk '{print $2}')
-  local commit=$(echo "${KBOT_COMMENT}" | awk '{print $3}')
+  local line=$(echo "${KBOT_COMMENT}" | head -n 1)
+  local at=$(echo "${line}" | awk '{print $1}')
+  local cmd=$(echo "${line}" | awk '{print $2}')
+  local commit=$(echo "${line}" | awk '{print $3}')
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
     echo "${commit##*( )}" # strips whitespace
