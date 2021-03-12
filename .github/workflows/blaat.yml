@@ -10,11 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Comment on PR #${{ github.event.issue.number }}"
-          echo "Comment on PR #${{ github.event.issue }}"
-          echo "Comment on PR #${{ github.event.action }}"
-          echo "Comment on PR #${{ github.event }}"
-          echo "Comment on PR #${{ github.sender.login }}"
-          echo "Comment on PR #${{ toJSON(github) }}"
+          ./script.sh
 
-          # wobble
+          echo "Comment on PR #${{ toJSON(github) }}"
