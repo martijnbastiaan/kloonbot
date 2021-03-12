@@ -11,12 +11,13 @@ kloon_fork_branch_to_local_branch() {
   local clone_url=$(echo "${pull_request_json}" | jq -r ".head.repo.clone_url")
   local author=$(echo "${pull_request_json}" | jq -r ".head.user.login")
   local branch_name=$(echo "${pull_request_json}" | jq -r ".head.ref")
+  local new_branch_name="fork/${author}/${branch_name}"
 
   git remote add fork "${clone_url}"
   git fetch fork
-  git checkout -b "fork/${author}/${branch_name}"
+  git checkout -b "${new_branch_name}"
   git reset "$commit" --hard
-  git push --set-upstream origin fork/"${branch_name}" -f
+  git push --set-upstream origin "${new_branch_name}" -f
 }
 
 parse_comment(){
