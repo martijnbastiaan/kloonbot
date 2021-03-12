@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+set -x
 IFS=$'\n\t'
 
 HEADERS="Accept: application/vnd.github.v3+json"
@@ -22,9 +23,9 @@ parse_comment(){
   local cmd=$(echo "${KBOT_COMMENT}" | awk '{print $2}')
   local commit=$(echo "${KBOT_COMMENT}" | awk '{print $3}')
 
-  echo ${at}
-  echo ${cmd}
-  echo ${commit}
+  echo "${at}"
+  echo "${cmd}"
+  echo "${commit}"
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
     echo "${commit}"
