@@ -9,12 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.pull_request }}
 
-    // github.repository == ‘jimbob88/Osiris’
-
     env:
       KBOT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
       KBOT_COMMENT: ${{ github.event.comment.body }}
-      KBOT_REPO: ${{ github.event.pull_request.head.repo.full_name }}
 
     steps:
       - name: Checkout
