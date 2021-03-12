@@ -23,14 +23,14 @@ parse_comment(){
   local cmd=$(echo "${KBOT_COMMENT}" | awk '{print $2}')
   local commit=$(echo "${KBOT_COMMENT}" | awk '{print $3}')
 
-  echo "${at}"
-  echo "${cmd}"
-  echo "${commit}"
+  echo "${at}" 1>&2
+  echo "${cmd}" 1>&2
+  echo "${commit}" 1>&2
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
-    echo "${commit}"
+    echo "${commit}" 1>&2
   else
-    echo "${KBOT_COMMENT}"
+    echo "${KBOT_COMMENT}" 1>&2
     exit 1;
   fi
 }
