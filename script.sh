@@ -6,13 +6,15 @@ HEADERS="Accept: application/vnd.github.v3+json"
 
 kloon_fork_branch_to_local_branch() {
   local pull_request_json="$1"
+  local commit="$2"
+  local clone_url=$(echo "${pull_request_json}" | jq -r ".head.repo.clone_url")
+  local branch_name=$(echo "${pull_request_json}" | jq -r ".head.ref")
 
-  git remote add fork $remote
+  git remote add fork "${clone_url}"
   git fetch fork
-  git checkout -b fork/$forkbranchname
-  git reset $commithash --hard
+  git checkout -b "fork/${branch_name}"
+  git reset "$commit" --hard
   git push -f
-
 }
 
 parse_comment(){
@@ -36,7 +38,7 @@ if [[ $KBOT_AUTHOR_ASSOC =~ ^(OWNER|MEMBER|COLLABORATOR)$ ]]; then
   commit=$(parse_comment)
 
   pull_request_json=$(curl -H "${HEADERS}" "${KBOT_PULL_REQUEST_URL}")
-  is_fork=$(echo "$pull_request_json" | jq ".head.repo.fork")
+  is_fork=$(echo "$pull_request_json" | jq -r ".head.repo.fork")
 
   if [[ ${is_fork} == "true" ]]; then
     # At this point we've established that:
