@@ -26,7 +26,7 @@ parse_comment(){
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
     echo "${commit##*( )}" # strips whitespace
   else
-    echo "${KBOT_COMMENT}" 1>&2
+    echo "parse_comment: Could not parse comment" 1>&2
     exit 1;
   fi
 }
