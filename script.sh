@@ -8,11 +8,12 @@ kloon_fork_branch_to_local_branch() {
   local pull_request_json="$1"
   local commit="$2"
   local clone_url=$(echo "${pull_request_json}" | jq -r ".head.repo.clone_url")
-  local branch_name=$(echo "${pull_request_json}" | jq -r ".head.label")
+  local author=$(echo "${pull_request_json}" | jq -r ".head.user.login")
+  local branch_name=$(echo "${pull_request_json}" | jq -r ".head.ref")
 
   git remote add fork "${clone_url}"
   git fetch fork
-  git checkout -b "fork/${branch_name}"
+  git checkout -b "fork/${author}/${branch_name}"
   git reset "$commit" --hard
   git push --set-upstream origin fork/"${branch_name}" -f
 }
@@ -23,7 +24,7 @@ parse_comment(){
   local commit=$(echo "${KBOT_COMMENT}" | awk '{print $3}')
 
   if [[ ${at} == "@kloonbot" && ${cmd} == "run_ci" ]]; then
-    echo "${commit}"
+    echo "${commit##*( )}" # strips whitespace
   else
     echo "${KBOT_COMMENT}" 1>&2
     exit 1;
