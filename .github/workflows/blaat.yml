@@ -12,6 +12,7 @@ jobs:
     env:
       KBOT_AUTHOR_ASSOC: ${{ github.event.comment.author_association }}
       KBOT_COMMENT: ${{ github.event.comment.body }}
+      KBOT_PULL_REQUEST_URL: ${{ github.event.issue.pull_request.url }}
 
     steps:
       - name: Checkout
@@ -23,10 +24,3 @@ jobs:
           ./script.sh
 
           echo "Comment on PR ${{ toJSON(github) }}"
-      # KBOT_IS_FORK:
-
-          pull_request_json="$(curl \
-            -H "Accept: application/vnd.github.v3+json" \
-            ${{ github.event.issue.pull_request.url }})"
-
-          echo "$pull_request_json" | jq ".head.repo.fork"
