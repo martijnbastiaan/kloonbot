@@ -37,6 +37,7 @@ parse_comment(){
 
 if [[ $KBOT_AUTHOR_ASSOC =~ ^(OWNER|MEMBER|COLLABORATOR)$ ]]; then
   commit=$(parse_comment)
+  echo "${commit}"
 
   pull_request_json=$(curl -H "${HEADERS}" "${KBOT_PULL_REQUEST_URL}")
   is_fork=$(echo "$pull_request_json" | jq -r ".head.repo.fork")
