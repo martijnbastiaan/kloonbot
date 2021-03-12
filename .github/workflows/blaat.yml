@@ -19,5 +19,4 @@ jobs:
         uses: actions/checkout@v2
 
       - run: |
-          echo "Comment on PR ${{ toJSON(github) }}"
           ./script.sh
