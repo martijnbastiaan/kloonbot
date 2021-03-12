@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+set -x
 IFS=$'\n\t'
 
 HEADERS="Accept: application/vnd.github.v3+json"
