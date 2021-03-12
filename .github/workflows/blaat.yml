@@ -1,0 +1,16 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+
+on: issue_comment
+
+jobs:
+  pr_commented:
+    name: PR comment
+    if: ${{ github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Comment on PR #${{ github.event.issue.number }}"
+          echo "Comment on PR #${{ github.event.issue }}"
+          echo "Comment on PR #${{ github.event.action }}"
+          echo "Comment on PR #${{ github.event }}"
